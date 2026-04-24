@@ -1,0 +1,7 @@
+node_modules
+client/dist
+npm-debug.log*
+.DS_Store
+.env
+server/bin/yt-dlp
+server/bin/yt-dlp.exe

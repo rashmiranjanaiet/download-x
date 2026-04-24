@@ -1,0 +1,11 @@
+
+> frameflow@1.0.0 start
+> npm run start --workspace server
+
+
+> frameflow-server@1.0.0 start
+> node index.js
+
+FrameFlow server listening on port 3001
+GET / 200 570 - 6.134 ms
+GET /api/health 200 11 - 1.916 ms

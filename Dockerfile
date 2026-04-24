@@ -1,0 +1,27 @@
+FROM node:20-bookworm-slim
+
+WORKDIR /app
+
+RUN apt-get update \
+  && apt-get install -y --no-install-recommends ffmpeg python3 python3-pip \
+  && pip3 install --no-cache-dir yt-dlp \
+  && rm -rf /var/lib/apt/lists/*
+
+COPY package.json ./
+COPY package-lock.json ./
+COPY client/package.json ./client/package.json
+COPY server/package.json ./server/package.json
+
+RUN npm ci
+
+COPY client ./client
+COPY server ./server
+
+RUN npm run build
+
+ENV NODE_ENV=production
+ENV PORT=10000
+
+EXPOSE 10000
+
+CMD ["npm", "run", "start"]
