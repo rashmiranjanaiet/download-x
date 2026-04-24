@@ -1,18 +1,12 @@
-
-> frameflow@1.0.0 start
-> npm run start --workspace server
-
-
-> frameflow-server@1.0.0 start
-> node index.js
-
 FrameFlow server listening on port 3001
-GET / 200 570 - 6.134 ms
-GET /api/health 200 11 - 1.916 ms
-GET / 200 570 - 2.587 ms
-GET / 200 570 - 2.117 ms
-GET /assets/index-DLeg-n_G.css 200 7978 - 6.342 ms
-GET /assets/index-BnmK214H.js 200 150373 - 6.875 ms
-GET /favicon.ico 200 570 - 2.989 ms
-POST /api/info 200 1051 - 4869.002 ms
-GET /api/download?url=https%3A%2F%2Fwww.instagram.com%2Freel%2FDXbvVGOEUVp%2F%3Futm_source%3Dig_web_copy_link%26igsh%3DNTc4MTIwNjQ2YQ%3D%3D&mode=video 200 1395797 - 7161.145 ms
+GET /api/health 200 11 - 7.645 ms
+GET /api/health 200 11 - 3.918 ms
+POST /api/info 200 1051 - 13642.608 ms
+POST /api/info 200 595 - 14122.725 ms
+GET /api/health 200 11 - 1.247 ms
+GET / 200 570 - 76.130 ms
+GET /assets/index-DLeg-n_G.css 200 7978 - 33.569 ms
+GET /assets/index-DziYnd9O.js 200 150676 - 32.658 ms
+GET /favicon.ico 200 570 - 22.811 ms
+POST /api/info 200 1002 - 29833.018 ms
+GET /api/download?url=https%3A%2F%2Fwww.instagram.com%2Freel%2FDXbutDGEzmu%2F%3Futm_source%3Dig_web_copy_link%26igsh%3DNTc4MTIwNjQ2YQ%3D%3D&mode=video 200 10612628 - 57008.389 ms

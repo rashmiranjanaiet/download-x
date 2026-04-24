@@ -51,6 +51,7 @@ function App() {
   const [analyzing, setAnalyzing] = useState(false);
   const [downloadingMode, setDownloadingMode] = useState('');
   const [notice, setNotice] = useState('');
+  const [previewFailed, setPreviewFailed] = useState(false);
 
   useEffect(() => {
     if (!notice) {
@@ -63,6 +64,10 @@ function App() {
 
     return () => window.clearTimeout(timer);
   }, [notice]);
+
+  useEffect(() => {
+    setPreviewFailed(false);
+  }, [details?.previewUrl]);
 
   async function handleAnalyze(event) {
     event.preventDefault();
@@ -95,7 +100,7 @@ function App() {
       setDetails(payload);
       setNotice('Link processed successfully. Choose the output you want.');
     } catch (requestError) {
-      setError(requestError.message);
+      setError(getFriendlyErrorMessage(requestError));
     } finally {
       setAnalyzing(false);
     }
@@ -132,7 +137,7 @@ function App() {
       window.URL.revokeObjectURL(objectUrl);
       setNotice(`Your ${mode} file is ready.`);
     } catch (requestError) {
-      setError(requestError.message);
+      setError(getFriendlyErrorMessage(requestError));
     } finally {
       setDownloadingMode('');
     }
@@ -237,7 +242,22 @@ function App() {
             ) : details ? (
               <div className="preview-content">
                 <div className="thumbnail-wrap">
-                  {details.thumbnail ? (
+                  {details.previewUrl && !previewFailed ? (
+                    <video
+                      key={details.previewUrl}
+                      className="preview-video"
+                      controls
+                      playsInline
+                      preload="metadata"
+                      poster={details.thumbnail || undefined}
+                      onError={() => setPreviewFailed(true)}
+                    >
+                      <source
+                        src={details.previewUrl}
+                        type={details.previewMimeType || 'video/mp4'}
+                      />
+                    </video>
+                  ) : details.thumbnail ? (
                     <img src={details.thumbnail} alt={details.title} className="thumbnail" />
                   ) : (
                     <div className="thumbnail-fallback">
@@ -380,6 +400,19 @@ function formatDuration(totalSeconds) {
   }
 
   return `${minutes}m ${String(remainingSeconds).padStart(2, '0')}s`;
+}
+
+function getFriendlyErrorMessage(error) {
+  const message = error instanceof Error ? error.message : String(error || '');
+
+  if (
+    error instanceof TypeError ||
+    message.toLowerCase().includes('failed to fetch')
+  ) {
+    return 'The app could not reach the backend API. Make sure the server is running on port 3001, then refresh and try again.';
+  }
+
+  return message || 'Something went wrong while processing the link.';
 }
 
 export default App;
